@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blockchain Based Voting System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 50%;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            margin-top: 50px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .candidate {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            padding: 10px;
+            background: #e7e7e7;
+            border-radius: 5px;
+        }
+        .btn {
+            padding: 10px 20px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Blockchain Voting System</h1>
+        <div id="candidates"></div>
+        <div class="result">
+            <h2>Results</h2>
+            <div id="results"></div>
+        </div>
+    </div>
+
+    <script>
+        const candidates = [
+            { id: 1, name: "Candidate A", votes: 0 },
+            { id: 2, name: "Candidate B", votes: 0 },
+            { id: 3, name: "Candidate C", votes: 0 }
+        ];
+
+        function renderCandidates() {
+            const candidatesDiv = document.getElementById('candidates');
+            candidatesDiv.innerHTML = '';
+            candidates.forEach(candidate => {
+                candidatesDiv.innerHTML += `
+                    <div class="candidate">
+                        <span>${candidate.name}</span>
+                        <button class="btn" onclick="vote(${candidate.id})">Vote</button>
+                    </div>
+                `;
+            });
+        }
+
+        function vote(candidateId) {
+            const candidate = candidates.find(c => c.id === candidateId);
+            candidate.votes++;
+            updateResults();
+            alert(`Your vote for ${candidate.name} has been recorded!`);
+        }
+
+        function updateResults() {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
+            candidates.forEach(candidate => {
+                resultsDiv.innerHTML += `<p>${candidate.name}: ${candidate.votes} votes</p>`;
+            });
+        }
+
+        renderCandidates();
+        updateResults();
+    </script>
+</body>
+</html>
