@@ -52,7 +52,6 @@ Dieses Projekt ist unter der MIT Lizenz veröffentlicht.
 
 👤 Autor
 
-Abdellatif AbouelabbesEmail: abouabdellatif.9@gmail.comPortfolio: Hier ansehen
 
 Viel Spaß beim Abstimmen! 🌍🚀
 
