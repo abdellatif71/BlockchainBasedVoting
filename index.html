@@ -56,6 +56,8 @@
             <h2>Results</h2>
             <div id="results"></div>
         </div>
+        <button onclick="resetVote()">Reset Vote</button>
+
     </div>
 
     <script>
@@ -64,35 +66,52 @@
             { id: 2, name: "Candidate B", votes: 0 },
             { id: 3, name: "Candidate C", votes: 0 }
         ];
-
+    
         function renderCandidates() {
-            const candidatesDiv = document.getElementById('candidates');
-            candidatesDiv.innerHTML = '';
+            const candidateContainer = document.getElementById('candidates');
+            candidateContainer.innerHTML = '';
+    
             candidates.forEach(candidate => {
-                candidatesDiv.innerHTML += `
+                candidateContainer.innerHTML += `
                     <div class="candidate">
                         <span>${candidate.name}</span>
-                        <button class="btn" onclick="vote(${candidate.id})">Vote</button>
+                        <button onclick="vote(${candidate.id})" ${localStorage.getItem('hasVoted') ? 'disabled' : ''}>Vote</button>
                     </div>
                 `;
             });
         }
-
+    
         function vote(candidateId) {
+            if (localStorage.getItem('hasVoted')) {
+                alert("You have already voted!");
+                return;
+            }
+    
             const candidate = candidates.find(c => c.id === candidateId);
-            candidate.votes++;
-            updateResults();
-            alert(`Your vote for ${candidate.name} has been recorded!`);
+            if (candidate) {
+                candidate.votes += 1;
+                localStorage.setItem('hasVoted', 'true');
+                updateResults();
+                renderCandidates(); // Update buttons to disable voting after first vote
+            }
         }
-
+    
         function updateResults() {
-            const resultsDiv = document.getElementById('results');
-            resultsDiv.innerHTML = '';
+            const resultsContainer = document.getElementById('results');
+            resultsContainer.innerHTML = '';
+    
             candidates.forEach(candidate => {
-                resultsDiv.innerHTML += `<p>${candidate.name}: ${candidate.votes} votes</p>`;
+                resultsContainer.innerHTML += `<p>${candidate.name}: ${candidate.votes} votes</p>`;
             });
         }
-
+    
+        function resetVote() {
+            localStorage.removeItem('hasVoted');
+            alert("You can vote again now!");
+            renderCandidates(); // Enable voting again after reset
+        }
+    
+        // Initial Rendering
         renderCandidates();
         updateResults();
     </script>
